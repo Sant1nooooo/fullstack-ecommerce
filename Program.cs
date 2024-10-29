@@ -1,4 +1,5 @@
 
+using Amazon.S3;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using server.Application.Extensions;
 using server.Application.Interfaces;
 using server.Application.Repositories;
+using server.Application.Utility.Services;
 using server.Infrastructure.Auth;
 using server.Infrastructure.Context;
 using System.Text;
@@ -57,11 +59,11 @@ namespace server
                     };
                 });
 
-            //AWS Service
-            //builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
-            //builder.Services.AddAWSService<IAmazonS3>(); //Gagamiting sa loob ng `ImageAWS`.
-            //builder.Services.AddSingleton<ImageAWS>(); //Ito naman yung gagamitin doon sa mediator handler.
-            // Custom class consist of function that is responsible for uploading the image to the bucket in AWS S3 and returning the link. 
+
+            //AWS Service (Ayaw gumana POTA HAHAHA)
+            //builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());  
+            //builder.Services.AddSingleton<IAmazonS3,AmazonS3Client>();
+            //builder.Services.AddSingleton<IProductImageService,ProductImageService>();
 
             //ValidationPipelineBehavior
             //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>)); //Toplogic

@@ -154,7 +154,7 @@
         "IsRequired": false
       },
       {
-        "Name": "ImageURL",
+        "Name": "MainImageURL",
         "Type": "System.String",
         "IsRequired": false
       },
