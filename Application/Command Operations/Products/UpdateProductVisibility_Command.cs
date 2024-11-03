@@ -24,7 +24,7 @@ namespace server.Application.Command_Operations.Products
 
             if (selectedProduct is null) return new UpdateProductVisibility_Result() { IsSuccessful = false, Message = "WARNNG: ProductID does not exist!"};
 
-            selectedProduct.ShowProduct = !selectedProduct.ShowProduct; //Toggling true or  false.
+            selectedProduct.IsAvailable = !selectedProduct.IsAvailable; //Toggling true or  false.
 
             await _productRepository.UpdateChanges();
 

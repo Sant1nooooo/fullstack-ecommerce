@@ -131,6 +131,74 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "server.API.Customers.CustomersController",
+    "Method": "AddCartProduct",
+    "RelativePath": "apiCustomers/add-product-cart",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Quantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Customers.CustomersController",
+    "Method": "IncreaseCartProuct",
+    "RelativePath": "apiCustomers/increase-cart-product",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CartProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Customers.CustomersController",
+    "Method": "RemoveCartProduct",
+    "RelativePath": "apiCustomers/remove-cart-product",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CartProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.API.Products.ProductController",
     "Method": "CreateProduct",
     "RelativePath": "apiProduct/create",

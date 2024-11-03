@@ -18,6 +18,7 @@ namespace server.Application.Models
         {
             this.Product = Product;
             this.Customer = Customer;
+            IsPaid = false;
             this.Price = Price;
             this.Quantity = Quantity;
         }

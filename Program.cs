@@ -38,6 +38,7 @@ namespace server
             //Custom Repository
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRespository>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
             //FluentValidation
             builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
@@ -55,7 +56,12 @@ namespace server
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Secret"]!)),
                         ValidIssuer = builder.Configuration["Jwt:Issuer"],
                         ValidAudience = builder.Configuration["Jwt:Audience"],
-                        ClockSkew = TimeSpan.Zero
+                        ClockSkew = TimeSpan.Zero,
+
+                        //ValidateIssuer = true,
+                        //ValidateAudience = true,
+                        //ValidateLifetime = true,
+                        //ValidateIssuerSigningKey = true,
                     };
                 });
 
@@ -66,7 +72,7 @@ namespace server
             //builder.Services.AddSingleton<IProductImageService,ProductImageService>();
 
             //ValidationPipelineBehavior
-            //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>)); //Toplogic
+            //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             //PROBLEM: Hindi ma control yung behavior sa pipeline.
 
 

@@ -41,5 +41,21 @@ namespace server.Core
             public bool IsSuccessful { get; set; }
             public string? Message { get; set; }
         }
+        public class AddCartProduct_Result
+        {
+            public bool IsFailure { get; set; }
+            public string? Message { get; set; }
+        }
+        public class RemoveCartProduct_Result
+        {
+            public bool IsDeleted { get; set; }
+            public string? Message { get; set; }
+        }
+        public class IncreaseDecreaseQuantity_Result
+        {
+            public bool IsSuccessful { get; set; }
+            public string? Message { get; set;
+            }
+        }
     }
 }
