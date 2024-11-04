@@ -33,11 +33,12 @@ namespace server.API.Customers
         }
 
         [HttpPatch("increase-cart-product")]
-        public async Task<IActionResult> IncreaseCartProuct([FromQuery] IncreaseCartProduct_Command requst, CancellationToken ct = default)
+        public async Task<IActionResult> IncreaseCartProuct([FromQuery] IncreaseDecreaseCartProduct_Command requst, CancellationToken ct = default)
         {
             IncreaseDecreaseQuantity_Result result = await _sender.Send(requst, ct);
             if (!result.IsSuccessful) return BadRequest(new { message = result.Message });
             return Ok(result.Message);
         }
+    
     }
 }

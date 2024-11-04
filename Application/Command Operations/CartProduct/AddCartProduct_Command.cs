@@ -29,7 +29,7 @@ namespace server.Application.Command_Operations.CartProduct
 
             if (selectedProduct is null ) return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: ProductID does not exist!" };
             if (selectedCustomer is null) return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: CustomerID does not exist!" };
-            if(request.Quantity > selectedProduct.AvailableQuantity) return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: Insufficient stock. Please reduce the quantity." }; //For new items
+            if(request.Quantity > selectedProduct.AvailableQuantity) return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: Quantity will exceed the product's available quantity!" }; //For new items
 
             int price = 0;
             if(selectedProduct!.DiscountedPrice > 0)
@@ -45,7 +45,7 @@ namespace server.Application.Command_Operations.CartProduct
             {
                 if((currentProduct.Quantity + request.Quantity) > selectedProduct.AvailableQuantity)
                 {
-                    return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: Insufficient stock. Please reduce the quantity." };
+                    return new AddCartProduct_Result() { IsFailure = true, Message = $"WARNING: Quantity will exceed the product's available quantity!" };
                 }
 
                 //Then increase nalang yung quantity and price ng specific product sa cart ni specific customer.

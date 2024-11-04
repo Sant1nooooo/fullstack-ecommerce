@@ -18,7 +18,7 @@ namespace server.Application.Query_Operations.Users
         {
             User? searchedAdmin = await _userRepository.GetAdminAsync(request.Id);
             Console.WriteLine(searchedAdmin!.FirstName);
-            if (searchedAdmin == null || searchedAdmin!.Authentication.ToLower() != "admin") return null;
+            if (searchedAdmin == null || searchedAdmin.Authentication!.ToLower() != "admin") return null;
             return searchedAdmin;
         }
 

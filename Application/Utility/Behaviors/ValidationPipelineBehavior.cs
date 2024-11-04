@@ -36,6 +36,7 @@ namespace server.Application.Utility.Behaviors
             }
             catch(Exception e)
             {
+                Console.WriteLine(e);
                 throw;
             }
         }

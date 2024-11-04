@@ -10,13 +10,14 @@ using server.Application.Repositories;
 using server.Application.Utility.Services;
 using server.Infrastructure.Auth;
 using server.Infrastructure.Context;
+using server.Infrastructure.Seeder;
 using System.Text;
 
 namespace server
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args) //void -> Task
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllers();
@@ -31,6 +32,9 @@ namespace server
 
             //Database Context
             builder.Services.AddDbContext<ECommerceDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceConnectionString")));
+
+            //Database Seeder
+            builder.Services.AddScoped<DatabaseSeeder>();
 
             //MedaitR Library
             builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -77,6 +81,13 @@ namespace server
 
 
             var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var seeder = services.GetRequiredService<DatabaseSeeder>();
+                await seeder.Seed();
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -88,7 +99,7 @@ namespace server
 
             app.UseAuthorization();
             app.MapControllers();
-            app.Run();
+            await app.RunAsync(); //app.Run()
         }
     }
 }
