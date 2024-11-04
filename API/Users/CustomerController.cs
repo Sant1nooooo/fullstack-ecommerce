@@ -2,6 +2,7 @@
 using MediatR;
 using server.Application.Command_Operations.CartProduct;
 using static server.Core.ResponseModels;
+using server.Application.Query_Operations.CartProduct;
 namespace server.API.Customers
 {
     [Route("api[controller]")]
@@ -14,6 +15,15 @@ namespace server.API.Customers
             _sender = sender;
         }
 
+        [HttpGet("get-cart-product-list")]
+        public async Task<IActionResult> GetCartProductList([FromQuery] GetCartProducts_Query request, CancellationToken ct = default)
+        {
+            GetCartProductList_Result result = await _sender.Send(request,ct);
+            if (!result.IsSuccessful) return BadRequest(new { message = result.Message });
+
+            return Ok(result.CartProductList);
+        }
+        
         [HttpPost("add-product-cart")]
         public async Task<IActionResult> AddCartProduct([FromQuery] AddCartProduct_Command request, CancellationToken ct = default)
         {

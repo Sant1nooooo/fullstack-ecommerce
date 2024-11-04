@@ -12,6 +12,20 @@ namespace server.Application.Repositories
         {
             _context = context;
         }
+        public  async Task<IEnumerable<CartProducts>?> GetCartProductListAsync(int customerID)
+        {
+            IEnumerable<CartProducts>? list = await _context.CartProducts
+                .Where(cp => cp.Product != null && cp.Customer!.ID == customerID)
+                .Include(cp => cp.Product)
+                //.Include(cp => cp.Customer)
+                //.GroupBy(cp => cp.Customer)
+                //.Select(cp => new {
+                //    Customer = cp.Key,
+                //    list = cp.Select(cp => cp.Product)
+                //})
+                .ToListAsync();
+            return list;
+        }
         public async Task AddProductCartAsync(CartProducts Product)
         {
             _context.CartProducts.Add(Product);

@@ -57,5 +57,11 @@ namespace server.Core
             public string? Message { get; set;
             }
         }
+        public class GetCartProductList_Result
+        {
+            public IEnumerable<CartProducts>? CartProductList { get; set; }
+            public bool IsSuccessful { get; set; }
+            public string? Message { get; set; }
+        }
     }
 }

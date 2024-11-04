@@ -37,8 +37,8 @@ namespace server.API.Products
             return Ok(result.Product);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreateProduct([FromQuery] CreateProduct_Command request, CancellationToken ct = default)
+        [HttpPost("create-product")]
+        public async Task<IActionResult> CreateProduct([FromBody] CreateProduct_Command request, CancellationToken ct = default)
         {
             var result = await _sender.Send(request, ct);
             if (result.IsExisting)

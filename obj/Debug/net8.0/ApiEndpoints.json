@@ -2,30 +2,15 @@
   {
     "ContainingType": "server.API.Users.AdminController",
     "Method": "CreateAdmin",
-    "RelativePath": "apiAdmin/add-admin",
+    "RelativePath": "apiAdmin/create-admin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "FirstName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "LastName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "server.Application.Command_Operations.CreateAdmin_Command",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -33,30 +18,15 @@
   {
     "ContainingType": "server.API.Users.AdminController",
     "Method": "CreateCustomer",
-    "RelativePath": "apiAdmin/add-customer",
+    "RelativePath": "apiAdmin/create-customer",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "FirstName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "LastName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "server.Application.Command_Operations.CreateCustomer_Command",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -158,6 +128,22 @@
   },
   {
     "ContainingType": "server.API.Customers.CustomersController",
+    "Method": "GetCartProductList",
+    "RelativePath": "apiCustomers/get-cart-product-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Customers.CustomersController",
     "Method": "IncreaseCartProuct",
     "RelativePath": "apiCustomers/increase-cart-product",
     "HttpMethod": "PATCH",
@@ -206,50 +192,15 @@
   {
     "ContainingType": "server.API.Products.ProductController",
     "Method": "CreateProduct",
-    "RelativePath": "apiProduct/create",
+    "RelativePath": "apiProduct/create-product",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ProductName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ProductDetails",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Type",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "MainImageURL",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Price",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "SubImageOne",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "SubImageTwo",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "SubImageThree",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "server.Application.Command_Operations.Products.CreateProduct_Command",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
