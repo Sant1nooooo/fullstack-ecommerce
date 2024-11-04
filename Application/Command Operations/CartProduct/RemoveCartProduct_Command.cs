@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using server.Application.Interfaces;
 using server.Application.Models;
@@ -16,24 +17,30 @@ namespace server.Application.Command_Operations.CartProduct
         private readonly IProductRepository _productRepository;
         private readonly IUsersRepository _usersRepository;
         private readonly ICustomerRepository _customerRepository;
-        public RemoveCartProduct_CommandHandler(IProductRepository productRepository, IUsersRepository usersRepository, ICustomerRepository customerRepository)
+        private readonly IValidator<RemoveCartProduct_Command> _validator;
+        public RemoveCartProduct_CommandHandler(IProductRepository productRepository, IUsersRepository usersRepository, ICustomerRepository customerRepository, IValidator<RemoveCartProduct_Command> validator)
         {
             _productRepository = productRepository;
             _usersRepository = usersRepository;
             _customerRepository = customerRepository;
+            _validator = validator;
         }
         public async Task<RemoveCartProduct_Result> Handle(RemoveCartProduct_Command request, CancellationToken ct)
         {
-            //Validating if the `ProductID` and `CustomerID` is existing.
-            Product? selectedProduct = await _productRepository.GetProductAsync(request.CartProductID);
-            Customer? selectedCustomer = await _usersRepository.GetCustomerAsync(request.CustomerID);
 
-            if (selectedProduct is null) return new RemoveCartProduct_Result() { IsDeleted = false, Message = $"WARNING: CartProductID does not exist!" };
-            if (selectedCustomer is null) return new RemoveCartProduct_Result() { IsDeleted = false, Message = $"WARNING: CustomerID does not exist!" };
+            var result = await _validator.ValidateAsync(request);
+            if (!result.IsValid)
+            {
+                return new RemoveCartProduct_Result()
+                {
+                    IsDeleted = false,
+                    Message = string.Join(", ", result.Errors.Select(e => e.ErrorMessage))
+                };
+            }
 
             CartProducts? selectedCartProduct = await _customerRepository.GetCartProductsAsync(request.CartProductID, request.CustomerID);
 
-            if (selectedCartProduct == null) return new RemoveCartProduct_Result() { IsDeleted = false, Message = $"WARNING: ({selectedProduct.ProductName}) does not exist in your cart!"};
+            if (selectedCartProduct is null) return new RemoveCartProduct_Result() { IsDeleted = false, Message = $"WARNING: Product does not exist in your cart!"};
 
             await _customerRepository.RemoveCartProductAsync(selectedCartProduct);
             return new RemoveCartProduct_Result() { IsDeleted = true, Message = $"({selectedCartProduct.Product!.ProductName}) is successfully removed in your cart!" };

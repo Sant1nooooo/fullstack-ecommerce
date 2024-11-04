@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "server.API.Users.AdminController",
-    "Method": "AddAdmin",
+    "Method": "CreateAdmin",
     "RelativePath": "apiAdmin/add-admin",
     "HttpMethod": "POST",
     "IsController": true,
@@ -32,7 +32,7 @@
   },
   {
     "ContainingType": "server.API.Users.AdminController",
-    "Method": "AddCustomer",
+    "Method": "CreateCustomer",
     "RelativePath": "apiAdmin/add-customer",
     "HttpMethod": "POST",
     "IsController": true,

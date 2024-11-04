@@ -50,7 +50,7 @@ namespace server.API.Users
 
         //[Authorize(Roles = "Admin")]
         [HttpPost("add-admin")]
-        public async Task<IActionResult> AddAdmin([FromQuery] AddAdmin_Command request, CancellationToken ct = default)
+        public async Task<IActionResult> CreateAdmin([FromQuery] CreateAdmin_Command request, CancellationToken ct = default)
         {
             await _sender.Send(request, ct);
             //Add try catch block in case the handler and repository throw error
@@ -59,7 +59,7 @@ namespace server.API.Users
 
         //[Authorize(Roles = "Admin")]
         [HttpPost("add-customer")]
-        public async Task<IActionResult> AddCustomer([FromQuery] CreateCustomer_Command request, CancellationToken ct = default)
+        public async Task<IActionResult> CreateCustomer([FromQuery] CreateCustomer_Command request, CancellationToken ct = default)
         {
             CreateCustomer_Result result = await _sender.Send(request, ct);
             if (result.IsExisting)
