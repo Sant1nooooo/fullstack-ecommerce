@@ -190,6 +190,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "server.API.FavoriteProduct.FavoriteProductController",
+    "Method": "DeleteFavoriteProduct",
+    "RelativePath": "apiFavoriteProduct/delete-favorite-product",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.FavoriteProduct.FavoriteProductController",
+    "Method": "GetFavoriteProducts",
+    "RelativePath": "apiFavoriteProduct/get-favorite-products",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.FavoriteProduct.FavoriteProductController",
+    "Method": "AddFavoriteProduct",
+    "RelativePath": "apiFavoriteProduct/mark-favorite-product",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "server.API.Products.ProductController",
     "Method": "CreateProduct",
     "RelativePath": "apiProduct/create-product",

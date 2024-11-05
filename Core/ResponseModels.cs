@@ -63,5 +63,21 @@ namespace server.Core
             public bool IsSuccessful { get; set; }
             public string? Message { get; set; }
         }
+        public class FavoriteProduct_Result
+        {
+            public bool IsMarked { get; set; }
+            public string? Message { get; set; }
+        }
+        public class GetFavoriteProduct_Result
+        {
+            public bool IsSuccessful { get; set; }
+            public IEnumerable<Product>? FavoriteProductList { get; set; }
+            public string? Message { get; set; }
+        }
+        public class DeleteFavoriteProduct_Result
+        {
+            public bool IsDeleted { get; set; }
+            public string? Message { get; set; }
+        }
     }
 }

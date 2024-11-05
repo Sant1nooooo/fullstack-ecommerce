@@ -43,6 +43,8 @@ namespace server
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRespository>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+            builder.Services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
+
 
             //FluentValidation
             builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
