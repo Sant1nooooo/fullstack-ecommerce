@@ -12,7 +12,7 @@ namespace server.Application.Models
         public string? Password { get; set; }
         public string? Authentication { get; set; }
 
-
+        public User() { }
         public User(string FirstName, string LastName, string Email, string Password, string Authentication)
         {
             this.FirstName = FirstName;

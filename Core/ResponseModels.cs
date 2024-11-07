@@ -79,5 +79,11 @@ namespace server.Core
             public bool IsDeleted { get; set; }
             public string? Message { get; set; }
         }
+        public class GetAdmin_Result
+        {
+            public bool IsRetrieved { get; set; }
+            public User? User { get; set; }
+            public string? Message { get; set; }
+        }
     }
 }

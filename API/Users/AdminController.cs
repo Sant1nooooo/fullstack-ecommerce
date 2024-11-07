@@ -43,9 +43,11 @@ namespace server.API.Users
         [HttpGet("get-admin")]
         public async Task<IActionResult> GetAdmin([FromQuery] GetAdmin_Query request, CancellationToken ct = default)
         {
-            User? admin = await _sender.Send(request, ct);
-            if (admin == null) return BadRequest(new {message = "WARNING: Invalid adminID"});
-            return Ok(admin);
+            GetAdmin_Result result = await _sender.Send(request, ct);
+
+            if (!result.IsRetrieved) return BadRequest(new { message = result.Message});
+
+            return Ok(result.User);
         }
 
         //[Authorize(Roles = "Admin")]
