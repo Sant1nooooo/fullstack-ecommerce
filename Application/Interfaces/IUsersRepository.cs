@@ -4,6 +4,7 @@ namespace server.Application.Interfaces
 {
     public interface IUsersRepository
     {
+        Task<IEnumerable<Customer>> GetCustomerListAsync();
         Task<IEnumerable<User>> GetUserListsAsync();
         Task<Customer?> GetCustomerAsync(int customerID);
         Task<User?> GetAdminAsync(int adminID);

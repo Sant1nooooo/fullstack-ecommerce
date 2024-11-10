@@ -85,5 +85,15 @@ namespace server.Core
             public User? User { get; set; }
             public string? Message { get; set; }
         }
+        public class GetVoucher_Result{
+            public bool IsRetrieved { get; set; }
+            public Voucher? Voucher { get; set; }
+            public string? ErrorMessage { get; set; }
+        }
+        public class CreateVoucher_Result
+        {
+            public bool IsCreated { get; set; }
+            public string? Message { get; set; }
+        }
     }
 }

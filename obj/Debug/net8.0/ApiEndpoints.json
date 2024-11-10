@@ -347,5 +347,42 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Voucher.VoucherController",
+    "Method": "CreateVoucher",
+    "RelativePath": "create-voucher",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "server.Application.Command_Operations.Vouchers.CreateVoucher_Command",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Voucher.VoucherController",
+    "Method": "GetVoucher",
+    "RelativePath": "get-voucher",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

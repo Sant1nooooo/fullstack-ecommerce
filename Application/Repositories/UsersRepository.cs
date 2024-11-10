@@ -16,6 +16,14 @@ namespace server.Application.Repositories
             connection = _context.Connection;
         }
 
+        public async Task<IEnumerable<Customer>> GetCustomerListAsync()
+        {
+            IEnumerable<Customer> list = await _context.User
+                .OfType<Customer>()
+                .Where(u => u.Authentication!.ToLower() == "customer")
+                .ToListAsync();
+            return list;
+        }
         public async Task<IEnumerable<User>> GetUserListsAsync()
         {
             IEnumerable<User> userLists = await _context.User.ToListAsync();
@@ -31,7 +39,6 @@ namespace server.Application.Repositories
             User? searchedAdmin = await _context.User.FirstOrDefaultAsync(eachUser => eachUser.ID == adminID);
             return searchedAdmin;
         }
-
         public User? NewGetAdminAsync(int adminID)
         {
             User selectedUser = new User();
@@ -42,10 +49,15 @@ namespace server.Application.Repositories
             command.Parameters.Add(new SqlParameter("@AdminID",adminID));
 
 
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader(); //Excuting the stored procedure and reading the results.
             while (reader.Read())
             {
-                selectedUser = new User(reader["FirstName"].ToString()!, reader["Lastname"].ToString()!, reader["Email"].ToString()!, reader["Password"].ToString()!, reader["Authentication"].ToString()!);
+                selectedUser = new User(
+                    reader["FirstName"].ToString()!,
+                    reader["Lastname"].ToString()!,
+                    reader["Email"].ToString()!,
+                    reader["Password"].ToString()!,
+                    reader["Authentication"].ToString()!);
             }
 
             //command.ExecuteNonQuery();

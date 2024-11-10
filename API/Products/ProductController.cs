@@ -73,6 +73,9 @@ namespace server.API.Products
         [HttpPatch("discount-product")]
         public async Task<IActionResult> DiscountProduct([FromQuery] DiscountProduct_Command request, CancellationToken ct = default)
         {
+            /*
+             The discount will be applied to Products, CartProducts, FavoriteProduct table. 
+             */
             DiscountedProduct_Result result = await _sender.Send(request, ct);
 
             if (!result!.IsSuccessful) return BadRequest(new { message = result.Message});

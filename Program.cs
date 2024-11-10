@@ -44,6 +44,7 @@ namespace server
             builder.Services.AddScoped<IProductRepository, ProductRespository>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
+            builder.Services.AddScoped<IVoucherRepository, VoucherRespository>();
 
 
             //FluentValidation
@@ -72,7 +73,6 @@ namespace server
                 });
 
 
-            //AWS Service (Ayaw gumana POTA HAHAHA)
             //builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());  
             //builder.Services.AddSingleton<IAmazonS3,AmazonS3Client>();
             //builder.Services.AddSingleton<IProductImageService,ProductImageService>();
