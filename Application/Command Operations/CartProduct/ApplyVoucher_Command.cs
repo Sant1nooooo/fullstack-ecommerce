@@ -10,6 +10,7 @@ namespace server.Application.Command_Operations.CartProduct
     {
         public int CustomerID { get; set; }
         public int ProductID { get; set; }
+        public bool ToogleVoucher { get; set; }
     }
 
     public class ApplyVoucher_CommandHandler : IRequestHandler<ApplyVoucher_Command, ApplyVoucher_Result>
@@ -30,7 +31,7 @@ namespace server.Application.Command_Operations.CartProduct
         {
             Product? product = await _product.GetProductAsync(request.ProductID);
             Customer? customer = await _users.GetCustomerAsync(request.CustomerID);
-
+            string responseMessage = "";
             if (product is null || customer is null)
             {
                 return new ApplyVoucher_Result
@@ -45,15 +46,26 @@ namespace server.Application.Command_Operations.CartProduct
 
             Voucher? selectedVoucher = await _voucher.GetVoucherAsync(request.CustomerID, request.ProductID);
             if (selectedVoucher is null) return new ApplyVoucher_Result { IsApplied = true, Message = $"WARNING: You don't have voucher for {product.ProductName}!" };
-            if(selectedVoucher.IsUsed) return new ApplyVoucher_Result { IsApplied = true, Message = "WARNING: You already used this voucher!" };
 
-
-            double discount = selectedVoucher.Discount / 100;
-            selectedCartProduct.DiscountedPrice = (int)(selectedCartProduct.OriginalPrice - (discount * selectedCartProduct.OriginalPrice));
-            selectedCartProduct.Voucher = selectedVoucher;
+            if (request.ToogleVoucher)
+            {
+                if(selectedVoucher.IsUsed) return new ApplyVoucher_Result { IsApplied = true, Message = "WARNING: You already used this voucher!" };
+                double discount = selectedVoucher.Discount / 100;
+                selectedCartProduct.DiscountedPrice = (int)(selectedCartProduct.OriginalPrice - (discount * selectedCartProduct.OriginalPrice));
+                selectedCartProduct.Voucher = selectedVoucher;
+                selectedVoucher.IsUsed = true;
+                responseMessage = $"You've applied voucher to {product.ProductName}";
+            }
+            else
+            {
+                selectedCartProduct.DiscountedPrice = 0;
+                selectedCartProduct.Voucher = null;
+                selectedVoucher.IsUsed = false;
+                responseMessage = "Voucher removed successfully!";
+            }
 
             await _product.UpdateChanges();
-            return new ApplyVoucher_Result() { IsApplied = true, Message = $"You've applied voucher to {product.ProductName}"};
+            return new ApplyVoucher_Result() { IsApplied = true, Message = responseMessage};
         }
     }
 }
