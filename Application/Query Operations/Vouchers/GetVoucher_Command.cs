@@ -24,7 +24,7 @@ namespace server.Application.Query_Operations.Vouchers
         public async Task<GetVoucher_Result> Handle(GetVoucher_Command request, CancellationToken ct)
         {
             Customer? selectedCustomer = await _usersRepository.GetCustomerAsync(request.CustomerID);
-            Product? selectedProduct= await _productRepository.GetProductAsync(request.CustomerID);
+            Product? selectedProduct= await _productRepository.GetProductAsync(request.ProductID);
 
             if (selectedCustomer is null ) return new GetVoucher_Result() { IsRetrieved = false, ErrorMessage = "WARNING: Invalid CustomerID!" };
             if (selectedProduct is null) return new GetVoucher_Result() { IsRetrieved = false, ErrorMessage = "WARNING: Invalid ProductID!" };

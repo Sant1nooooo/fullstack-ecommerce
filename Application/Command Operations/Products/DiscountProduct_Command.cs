@@ -29,14 +29,14 @@ namespace server.Application.Command_Operations.Products
             selectedProduct.DiscountedPrice = (int)(selectedProduct.OriginalPrice - (selectedProduct.OriginalPrice * discount)); //500
             await _productRepository.UpdateChanges();
 
-            Console.WriteLine($"DISCOUNT REQUEST: ({request.Discount})"); //50
-            Console.WriteLine($"DISCOUNT IN DECIMAL: ({request.Discount / 100m})"); //0.5
+            //Console.WriteLine($"DISCOUNT REQUEST: ({request.Discount})"); //50
+            //Console.WriteLine($"DISCOUNT IN DECIMAL: ({request.Discount / 100m})"); //0.5
 
-            Console.WriteLine($"PRODUCT PRICE: ({selectedProduct.OriginalPrice})"); //1000
-            Console.WriteLine($"DISCOUNTED PRICE: ({selectedProduct.DiscountedPrice})"); //500
-            Console.WriteLine($"PRICE DEDUCTION: ({selectedProduct.OriginalPrice * discount})"); //500
+            //Console.WriteLine($"PRODUCT PRICE: ({selectedProduct.OriginalPrice})"); //1000
+            //Console.WriteLine($"DISCOUNTED PRICE: ({selectedProduct.DiscountedPrice})"); //500
+            //Console.WriteLine($"PRICE DEDUCTION: ({selectedProduct.OriginalPrice * discount})"); //500
 
-            return new DiscountedProduct_Result() { IsSuccessful = true, Message = $"{request.Discount}% discount is set to {selectedProduct.ProductName}" };
+            return new DiscountedProduct_Result() { IsSuccessful = true, Message = $"{request.Discount}% discount is set to {selectedProduct.ProductName}"};
         }
     }
 }

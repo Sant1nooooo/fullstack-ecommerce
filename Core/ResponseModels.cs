@@ -1,4 +1,5 @@
 ﻿using server.Application.Models;
+using System.Diagnostics;
 
 namespace server.Core
 {
@@ -93,6 +94,12 @@ namespace server.Core
         public class CreateVoucher_Result
         {
             public bool IsCreated { get; set; }
+            public string? Message { get; set; }
+        }
+
+        public class ApplyVoucher_Result
+        {
+            public bool IsApplied { get; set; }
             public string? Message { get; set; }
         }
     }

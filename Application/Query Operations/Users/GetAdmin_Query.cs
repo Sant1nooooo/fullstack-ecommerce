@@ -17,7 +17,7 @@ namespace server.Application.Query_Operations.Users
         }
         public async Task<GetAdmin_Result> Handle(GetAdmin_Query request, CancellationToken ct)
         {
-            User? searchedAdmin =  _userRepository.NewGetAdminAsync(request.Id);
+            User? searchedAdmin =  await _userRepository.NewGetAdminAsync(request.Id);
             Console.WriteLine(searchedAdmin!.FirstName);
 
             if (searchedAdmin.FirstName == null) return new GetAdmin_Result() { IsRetrieved = false, Message = "WARNING: Invalid adminID!"};

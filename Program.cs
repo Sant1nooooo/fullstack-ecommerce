@@ -44,7 +44,7 @@ namespace server
             builder.Services.AddScoped<IProductRepository, ProductRespository>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
             builder.Services.AddScoped<IFavoriteProductRepository, FavoriteProductRepository>();
-            builder.Services.AddScoped<IVoucherRepository, VoucherRespository>();
+            builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 
 
             //FluentValidation

@@ -49,6 +49,6 @@ namespace server.API.Customers
             if (!result.IsSuccessful) return BadRequest(new { message = result.Message });
             return Ok(result.Message);
         }
-    
+
     }
 }

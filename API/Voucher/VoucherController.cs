@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using server.Application.Command_Operations.CartProduct;
 using server.Application.Command_Operations.Vouchers;
 using server.Application.Query_Operations.Vouchers;
 using static server.Core.ResponseModels;
@@ -34,5 +35,12 @@ namespace server.API.Voucher
             return Ok(result.Message);
         }
 
+        [HttpPatch("apply-voucher")]
+        public async Task<IActionResult> ApplyVoucher([FromQuery] ApplyVoucher_Command request, CancellationToken ct = default)
+        {
+            ApplyVoucher_Result result = await _sender.Send(request, ct);
+            if (!result.IsApplied) return BadRequest(new {message = result.Message});
+            return Ok(result.Message);
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace server.Application.Command_Operations.CartProduct
                 }
 
                 //Then increase nalang yung quantity and price ng specific product sa cart ni specific customer.
-                currentProduct.Price = currentProduct.Price + price;
+                currentProduct.OriginalPrice = currentProduct.OriginalPrice + price;
                 currentProduct.Quantity = currentProduct.Quantity + request.Quantity;
                 await _customerRepository.UpdateChangesAsync();
                 return new AddCartProduct_Result() { IsFailure = false, Message = $"Successfully added {request.Quantity} ({selectedProduct.ProductName})!" };

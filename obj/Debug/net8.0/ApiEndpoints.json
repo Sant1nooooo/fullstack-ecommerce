@@ -350,6 +350,27 @@
   },
   {
     "ContainingType": "server.API.Voucher.VoucherController",
+    "Method": "ApplyVoucher",
+    "RelativePath": "apply-voucher",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CustomerID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "server.API.Voucher.VoucherController",
     "Method": "CreateVoucher",
     "RelativePath": "create-voucher",
     "HttpMethod": "POST",

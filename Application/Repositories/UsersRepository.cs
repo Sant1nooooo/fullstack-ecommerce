@@ -39,29 +39,36 @@ namespace server.Application.Repositories
             User? searchedAdmin = await _context.User.FirstOrDefaultAsync(eachUser => eachUser.ID == adminID);
             return searchedAdmin;
         }
-        public User? NewGetAdminAsync(int adminID)
+        public async Task<User?> NewGetAdminAsync(int adminID)
         {
-            User selectedUser = new User();
-            SqlCommand command = new SqlCommand("GetAdminProc", connection);
+            //
+            User? selectedUser = await _context.User
+                .FromSqlRaw("EXEC GetAdminProc @AdminID", adminID)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+
+
+            //SqlCommand command = new SqlCommand("GetAdminProc", connection);
             
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            connection.Open(); //Opening the connection so that the context will have an access to the SQL server.
-            command.Parameters.Add(new SqlParameter("@AdminID",adminID));
+            //command.CommandType = System.Data.CommandType.StoredProcedure;
+            //connection.Open(); //Opening the connection so that the context will have an access to the SQL server.
+            //command.Parameters.Add(new SqlParameter("@AdminID",adminID));
 
 
-            SqlDataReader reader = command.ExecuteReader(); //Excuting the stored procedure and reading the results.
-            while (reader.Read())
-            {
-                selectedUser = new User(
-                    reader["FirstName"].ToString()!,
-                    reader["Lastname"].ToString()!,
-                    reader["Email"].ToString()!,
-                    reader["Password"].ToString()!,
-                    reader["Authentication"].ToString()!);
-            }
+            //SqlDataReader reader = command.ExecuteReader(); //Excuting the stored procedure and reading the results.
+            //while (reader.Read())
+            //{
+            //    selectedUser = new User(
+            //        reader["FirstName"].ToString()!,
+            //        reader["Lastname"].ToString()!,
+            //        reader["Email"].ToString()!,
+            //        reader["Password"].ToString()!,
+            //        reader["Authentication"].ToString()!);
+            //}
 
-            //command.ExecuteNonQuery();
-            connection.Close();
+            ////command.ExecuteNonQuery();
+            //connection.Close();
             return selectedUser;
         }
         public async Task CreateAdminAsync(User admin)

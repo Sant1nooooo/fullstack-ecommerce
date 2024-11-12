@@ -12,6 +12,6 @@ namespace server.Application.Interfaces
         Task CreateCustomerAsync(Customer customer);
         Task<bool> IsEmailExisting(string email);
         Task<User?> LoginUserAsync(string email);
-        User? NewGetAdminAsync(int adminID);
+        Task<User?> NewGetAdminAsync(int adminID);
     }
 }

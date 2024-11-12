@@ -9,8 +9,10 @@ namespace server.Application.Models
         public Product? Product { get; set; }
         public Customer? Customer { get; set; }
         public bool IsPaid { get; set; }
-        public int Price { get; set; }
+        public int OriginalPrice { get; set; }
+        public int DiscountedPrice { get; set; }
         public int Quantity { get; set; }
+        public Voucher? Voucher { get; set; }
 
 
         public CartProducts() { }
@@ -19,7 +21,7 @@ namespace server.Application.Models
             this.Product = Product;
             this.Customer = Customer;
             IsPaid = false;
-            this.Price = Price;
+            this.OriginalPrice = Price;
             this.Quantity = Quantity;
         }
     }
