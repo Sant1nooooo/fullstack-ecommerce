@@ -52,7 +52,7 @@ namespace server.Application.Repositories
             //await command.ExecuteNonQueryAsync();
             //await connection.CloseAsync();
         }
-        public async Task ApplyVoucherAsync(AppliedVouchers appliedVoucher)
+        public async Task ToggleVoucherAsync(AppliedVouchers appliedVoucher)
         {
             _context.AppliedVouchers.Add(appliedVoucher);
             await _context.SaveChangesAsync();

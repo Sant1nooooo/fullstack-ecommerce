@@ -35,10 +35,10 @@ namespace server.API.Voucher
             return Ok(result.Message);
         }
 
-        [HttpPatch("apply-voucher")]
-        public async Task<IActionResult> ApplyVoucher([FromQuery] ApplyVoucher_Command request, CancellationToken ct = default)
+        [HttpPatch("toggle-voucher")]
+        public async Task<IActionResult> ToggleCoucher([FromQuery] ToggleVoucher_Command request, CancellationToken ct = default)
         {
-            ApplyVoucher_Result result = await _sender.Send(request, ct);
+            ToggleVoucher_Result result = await _sender.Send(request, ct);
             if (!result.IsApplied) return BadRequest(new {message = result.Message});
             return Ok(result.Message);
         }

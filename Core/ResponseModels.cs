@@ -97,7 +97,7 @@ namespace server.Core
             public string? Message { get; set; }
         }
 
-        public class ApplyVoucher_Result
+        public class ToggleVoucher_Result
         {
             public bool IsApplied { get; set; }
             public string? Message { get; set; }

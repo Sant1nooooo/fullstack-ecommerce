@@ -6,7 +6,7 @@ using static server.Core.ResponseModels;
 
 namespace server.Application.Command_Operations.CartProduct
 {
-    public class ApplyVoucher_Command : IRequest<ApplyVoucher_Result>
+    public class ToggleVoucher_Command : IRequest<ToggleVoucher_Result>
     {
         public int CustomerID { get; set; }
         public int ProductID { get; set; }
@@ -14,26 +14,26 @@ namespace server.Application.Command_Operations.CartProduct
         public bool ToogleVoucher { get; set; }
     }
 
-    public class ApplyVoucher_CommandHandler : IRequestHandler<ApplyVoucher_Command, ApplyVoucher_Result>
+    public class ToggleVoucher_CommandHandler : IRequestHandler<ToggleVoucher_Command, ToggleVoucher_Result>
     {
         private readonly IUsersRepository _users;
         private readonly IProductRepository _product;
         private readonly ICustomerRepository _customer;
         private readonly IVoucherRepository _voucher;
-        public ApplyVoucher_CommandHandler(IUsersRepository users, IProductRepository product, ICustomerRepository customer, IVoucherRepository voucher)
+        public ToggleVoucher_CommandHandler(IUsersRepository users, IProductRepository product, ICustomerRepository customer, IVoucherRepository voucher)
         {
             _users = users;
             _product = product;
             _customer = customer;
             _voucher = voucher;
         }
-        public async Task<ApplyVoucher_Result> Handle(ApplyVoucher_Command request, CancellationToken ct)
+        public async Task<ToggleVoucher_Result> Handle(ToggleVoucher_Command request, CancellationToken ct)
         {
             Product? product = await _product.GetProductAsync(request.ProductID);
             Customer? customer = await _users.GetCustomerAsync(request.CustomerID);
             if (product is null || customer is null)
             {
-                return new ApplyVoucher_Result
+                return new ToggleVoucher_Result
                 {
                     IsApplied = true,
                     Message = product is null ? "WARNING: ProductID does not exist!" : "WARNING: CustomerID does not exist!"
@@ -41,10 +41,10 @@ namespace server.Application.Command_Operations.CartProduct
             }
 
             CartProducts? selectedCartProduct = await _customer.GetCartProductsAsync(request.ProductID, request.CustomerID);
-            if(selectedCartProduct is null ) return new ApplyVoucher_Result { IsApplied = true, Message = $"WARNING: You don't have {product.ProductName} in your cart!" };
+            if(selectedCartProduct is null ) return new ToggleVoucher_Result { IsApplied = true, Message = $"WARNING: You don't have {product.ProductName} in your cart!" };
 
             Voucher? selectedVoucher = await _voucher.GetVoucherAsync(request.CustomerID, request.ProductID, request.VoucherID);
-            if (selectedVoucher is null) return new ApplyVoucher_Result { IsApplied = true, Message = $"WARNING: You don't have voucher for {product.ProductName}!" };
+            if (selectedVoucher is null) return new ToggleVoucher_Result { IsApplied = true, Message = $"WARNING: You don't have voucher for {product.ProductName}!" };
             Console.WriteLine($"SELECTED VOUCHER: {selectedVoucher.Title}");
 
 
@@ -54,7 +54,7 @@ namespace server.Application.Command_Operations.CartProduct
             double discount = selectedVoucher.Discount;
             if (request.ToogleVoucher)
             {
-                if (selectedVoucher.IsUsed) return new ApplyVoucher_Result { IsApplied = true, Message = "WARNING: You already used this voucher!" };
+                if (selectedVoucher.IsUsed) return new ToggleVoucher_Result { IsApplied = true, Message = "WARNING: You already used this voucher!" };
                 
                 bool IsFirst = await _voucher.VoucherCheckAsync(selectedCartProduct.ID);
                 if (IsFirst) //Baka icheck nalang yung length ng IEnumerable<Voucher?> and i-remove yung `VoucherCheckAsync()`
@@ -65,7 +65,7 @@ namespace server.Application.Command_Operations.CartProduct
                 }
 
                 selectedVoucher.IsUsed = true;
-                await _voucher.ApplyVoucherAsync(new AppliedVouchers() { CartProduct = selectedCartProduct, Voucher = selectedVoucher});
+                await _voucher.ToggleVoucherAsync(new AppliedVouchers() { CartProduct = selectedCartProduct, Voucher = selectedVoucher});
                 responseMessage = $"You've applied voucher to {product.ProductName}";
             }
             else
@@ -84,7 +84,7 @@ namespace server.Application.Command_Operations.CartProduct
             Console.WriteLine($"CALCULATED DISCOUNT PERCENTAGE: {discount}");
 
             await _product.UpdateChanges();
-            return new ApplyVoucher_Result() { IsApplied = true, Message = responseMessage};
+            return new ToggleVoucher_Result() { IsApplied = true, Message = responseMessage};
         }
     }
 }
