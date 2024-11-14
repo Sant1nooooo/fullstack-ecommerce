@@ -367,6 +367,11 @@
         "IsRequired": false
       },
       {
+        "Name": "VoucherID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "ToogleVoucher",
         "Type": "System.Boolean",
         "IsRequired": false
@@ -405,6 +410,11 @@
       },
       {
         "Name": "ProductID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "VoucherID",
         "Type": "System.Int32",
         "IsRequired": false
       }

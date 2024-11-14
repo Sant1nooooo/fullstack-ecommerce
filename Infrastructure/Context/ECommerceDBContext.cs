@@ -21,6 +21,7 @@ namespace server.Infrastructure.Context
         public DbSet<CartProducts> CartProducts { get; set; }
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<AppliedVouchers> AppliedVouchers { get; set; }
 
         public SqlConnection Connection => new SqlConnection(_configuration["ConnectionStrings:ECommerceConnectionString"]);
     }

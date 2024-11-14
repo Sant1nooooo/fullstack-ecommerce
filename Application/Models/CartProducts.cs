@@ -12,7 +12,6 @@ namespace server.Application.Models
         public int OriginalPrice { get; set; }
         public int DiscountedPrice { get; set; }
         public int Quantity { get; set; }
-        public Voucher? Voucher { get; set; }
 
 
         public CartProducts() { }

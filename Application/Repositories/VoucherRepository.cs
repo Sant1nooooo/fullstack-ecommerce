@@ -15,10 +15,10 @@ namespace server.Application.Repositories
             _context = context;
             connection = _context.Connection; //Initlaizing the SQLConnection
         }
-        public async Task<Voucher?> GetVoucherAsync(int customerID, int productID)
+        public async Task<Voucher?> GetVoucherAsync(int customerID, int productID, int voucherID)
         {
             Voucher? voucher = await _context.Vouchers
-                .Where(v => v.Customer!.ID == customerID && v.Product!.ID == productID)
+                .Where(v => v.Customer!.ID == customerID && v.Product!.ID == productID && v.ID == voucherID)
                 .Include(v => v.Product)
                 .Include(v => v.Customer)
                 .FirstOrDefaultAsync();
@@ -51,6 +51,44 @@ namespace server.Application.Repositories
             //await connection.OpenAsync();
             //await command.ExecuteNonQueryAsync();
             //await connection.CloseAsync();
+        }
+        public async Task ApplyVoucherAsync(AppliedVouchers appliedVoucher)
+        {
+            _context.AppliedVouchers.Add(appliedVoucher);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> VoucherCheckAsync(int cartID)
+        {
+            bool isFirst = await _context.AppliedVouchers
+                .AnyAsync(av => av.CartProduct != null && av.CartProduct.ID == cartID);
+            return isFirst;
+        }
+        public async Task<IEnumerable<Voucher?>> GetVoucherList(int cartProductID)
+        {
+            IEnumerable<Voucher?> voucherList = await _context.AppliedVouchers
+                .Where(av => av.CartProduct!.ID == cartProductID)
+                .Select(av => av.Voucher)
+                .ToListAsync();
+
+            return voucherList;
+        }
+        public async Task<IEnumerable<Voucher?>> FilterVoucherList(int voucherID)
+        {
+            IEnumerable<Voucher?> filteredVoucherList = await _context.AppliedVouchers
+                .Where(av => av.Voucher!.ID != voucherID)
+                .Select(av => av.Voucher)
+                .ToListAsync();
+            return filteredVoucherList;
+        }
+        public async Task RemoveVoucherAsync(int voucherID)
+        {
+            AppliedVouchers? rowData = await _context.AppliedVouchers
+                .Where(av => av.Voucher!.ID == voucherID)
+                .FirstOrDefaultAsync();
+
+            _context.AppliedVouchers.Remove(rowData!);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

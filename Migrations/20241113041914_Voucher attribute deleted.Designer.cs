@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using server.Infrastructure.Context;
 namespace server.Migrations
 {
     [DbContext(typeof(ECommerceDBContext))]
-    partial class ECommerceDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241113041914_Voucher attribute deleted")]
+    partial class Voucherattributedeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +24,6 @@ namespace server.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("server.Application.Models.AppliedVouchers", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int?>("CartProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("VoucherID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CartProductID");
-
-                    b.HasIndex("VoucherID");
-
-                    b.ToTable("AppliedVouchers");
-                });
 
             modelBuilder.Entity("server.Application.Models.CartProducts", b =>
                 {
@@ -291,21 +271,6 @@ namespace server.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("server.Application.Models.AppliedVouchers", b =>
-                {
-                    b.HasOne("server.Application.Models.CartProducts", "CartProduct")
-                        .WithMany()
-                        .HasForeignKey("CartProductID");
-
-                    b.HasOne("server.Application.Models.Voucher", "Voucher")
-                        .WithMany()
-                        .HasForeignKey("VoucherID");
-
-                    b.Navigation("CartProduct");
-
-                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("server.Application.Models.CartProducts", b =>

@@ -9,6 +9,7 @@ namespace server.Application.Query_Operations.Vouchers
     {
         public int CustomerID { get; set; }
         public int ProductID {  get; set; }
+        public int VoucherID { get; set; }
     }
     public class GetVoucher_CommandHandler : IRequestHandler<GetVoucher_Command, GetVoucher_Result>
     {
@@ -30,7 +31,7 @@ namespace server.Application.Query_Operations.Vouchers
             if (selectedProduct is null) return new GetVoucher_Result() { IsRetrieved = false, ErrorMessage = "WARNING: Invalid ProductID!" };
 
 
-            Voucher? selectedVoucher =  await _voucherRepository.GetVoucherAsync(request.CustomerID,request.ProductID);
+            Voucher? selectedVoucher =  await _voucherRepository.GetVoucherAsync(request.CustomerID,request.ProductID, request.VoucherID);
             if (selectedVoucher is null) return new GetVoucher_Result() { IsRetrieved = false, ErrorMessage = "WARNING: You don't have voucher for this product!"};
             if (selectedVoucher.IsUsed) return new GetVoucher_Result() { IsRetrieved = false, ErrorMessage = "WARNING: You already used this voucher!" };
 
