@@ -1,16 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using server.Application.Interfaces;
 using server.Application.Models;
 using server.Infrastructure.Context;
+using System.Data;
 
 namespace server.Application.Repositories
 {
     public class CustomerRepository: ICustomerRepository
     {
         private readonly ECommerceDBContext _context;
+        private readonly SqlConnection connection;
         public CustomerRepository(ECommerceDBContext context)
         {
             _context = context;
+            connection = context.Connection;
         }
         public  async Task<IEnumerable<CartProducts>?> GetCartProductListAsync(int customerID)
         {
@@ -50,6 +54,37 @@ namespace server.Application.Repositories
         public async Task UpdateChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<CartProducts>?> CheckoutCartProductAsync(List<int> ProductIDList, int customerID)
+        {
+            List<CartProducts> list = new();
+
+            /*SqlParameter customerIDParam = new SqlParameter("@CustomerID", customerID);
+            foreach (int eachProductID in ProductIDList)
+            {
+                CartProducts? currentCartProduct = _context.CartProducts
+                    .FromSqlRaw("EXEC SP_CheckoutCartProduct @ProductID, @CustomerID", new SqlParameter("@ProductID", eachProductID), customerIDParam)
+                    .AsEnumerable()
+                    .FirstOrDefault();
+                if (currentCartProduct!.IsPaid)
+                {
+                    return null;
+                }
+                currentCartProduct.IsPaid = true;
+                list.Add(currentCartProduct);
+            }*/
+            
+            foreach(int eachProductID in ProductIDList)
+            {
+                CartProducts? currentCartProduct = await GetCartProductsAsync(eachProductID, customerID);
+                if (currentCartProduct!.IsPaid) return null;
+
+                currentCartProduct.IsPaid = true;
+                list.Add(currentCartProduct);
+            }
+            await UpdateChangesAsync();
+            //Gagawing LINQ para masama yung object ng `Product` and `Customer`.
+            return list;
         }
     }
 }

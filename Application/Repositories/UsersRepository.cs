@@ -41,11 +41,11 @@ namespace server.Application.Repositories
         }
         public async Task<User?> NewGetAdminAsync(int adminID)
         {
-            //
-            User? selectedUser = await _context.User
-                .FromSqlRaw("EXEC GetAdminProc @AdminID", adminID)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            SqlParameter adminIDParam = new SqlParameter("@AdminID",adminID);
+            User? selectedUser = _context.User
+                .FromSqlRaw("EXEC GetAdminProc @AdminID", adminIDParam)
+                .AsEnumerable()
+                .FirstOrDefault();
 
 
 

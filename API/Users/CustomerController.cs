@@ -3,6 +3,7 @@ using MediatR;
 using server.Application.Command_Operations.CartProduct;
 using static server.Core.ResponseModels;
 using server.Application.Query_Operations.CartProduct;
+using server.Application.Command_Operations.CheckoutProducts;
 namespace server.API.Customers
 {
     [Route("api[controller]")]
@@ -50,5 +51,17 @@ namespace server.API.Customers
             return Ok(result.Message);
         }
 
+
+        [HttpGet("checkout-cart-product")]
+        //Change to `HttpPatch` since it will change the `IsPaid` of the selected CartProducts to true.
+        public async Task<IActionResult> CheckoutCartProduct([FromQuery] CheckoutCartProducts_Command request, CancellationToken ct = default)
+        {
+            CheckoutCartProductsResult result = await _sender.Send(request, ct);
+            if (!result.IsCheckedOut)
+            {
+                return BadRequest(new { message = result.Message});
+            }
+            return Ok(new { products = result.ProductList});
+        }
     }
 }

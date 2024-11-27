@@ -8,6 +8,7 @@ namespace server.Application.Interfaces
         Task AddProductCartAsync(CartProducts Product);
         Task<CartProducts?> GetCartProductsAsync(int productID, int customerID);
         Task RemoveCartProductAsync(CartProducts CartProduct);
+        Task<IEnumerable<CartProducts>?> CheckoutCartProductAsync(List<int> ProductIDList, int customerID);
         Task UpdateChangesAsync();
     }
 }

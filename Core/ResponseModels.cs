@@ -1,4 +1,5 @@
-﻿using server.Application.Models;
+﻿using Amazon.S3.Model;
+using server.Application.Models;
 using System.Diagnostics;
 
 namespace server.Core
@@ -100,6 +101,13 @@ namespace server.Core
         public class ToggleVoucher_Result
         {
             public bool IsApplied { get; set; }
+            public string? Message { get; set; }
+        }
+
+        public class CheckoutCartProductsResult
+        {
+            public IEnumerable<CartProducts>? ProductList { get; set; }
+            public bool IsCheckedOut { get; set; }
             public string? Message { get; set; }
         }
     }
